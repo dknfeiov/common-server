@@ -1,6 +1,7 @@
 import { CODES } from './../common/CODE';
 import * as Md5 from 'js-md5'
 
+// Class 内部只有静态方法， 没有静态属性
 export class Token {
 
     static token;
@@ -9,9 +10,9 @@ export class Token {
     }
 
     public static check(req, res, next) {
-        if (req.path.indexOf('user/login') !== -1) {
-            console.log(req.path);
+        if (req.originalUrl.indexOf('user/login') !== -1) {
             next();
+            return;
         }
         if (Token.checkToken(req.cookies.token)) {
             next()
@@ -22,11 +23,11 @@ export class Token {
     }
 
     public static checkToken(token): boolean {
-        return Token.token == token
+        return token && Token.token == token
     }
 
     public static newToken(): string {
-        Token.token = Md5(Date.now());
+        Token.token = Md5(Date.now()+'');
         return Token.token;
     }
 
