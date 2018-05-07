@@ -14,6 +14,10 @@ const docSchema = new Schema({
         type: String,
         required: true
     },
+    tags: {
+        type: String,
+        required: true
+    },
     file: {
         type: String,
         required: true

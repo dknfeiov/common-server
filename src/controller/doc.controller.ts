@@ -16,7 +16,7 @@ class DocController {
     async addDoc(req, res, next) {
         const conn = mongoose.connection;
         const gfs = Grid(conn.db, mongoose.mongo);
-        const fileName = req.file.filename + Date.now()
+        const fileName = Date.now() + req.file.filename;
         var writestream = gfs.createWriteStream({
             'filename': fileName
         });

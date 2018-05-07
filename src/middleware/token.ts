@@ -10,11 +10,12 @@ export class Token {
     }
 
     public static check(req, res, next) {
-        if (req.originalUrl.indexOf('user/login') !== -1) {
+        // 登录，文件下载不校验权限
+        if (req.originalUrl.indexOf('user/login') !== -1 || req.originalUrl.indexOf('download') !== -1) {
             next();
             return;
         }
-        if (Token.checkToken(req.cookies.token)) {
+        if (Token.checkToken(req.headers.authorization)) {
             next()
         } else {
             // Token已过期
